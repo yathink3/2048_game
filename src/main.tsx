@@ -1,11 +1,11 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import App from './App';
+import Game from './Game';
 import './index.css';
 
 render(
   <StrictMode>
-    <App />
+    <Game />
   </StrictMode>,
   document.getElementById('root')
 );
