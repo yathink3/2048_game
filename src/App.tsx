@@ -2,18 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const Button = (props: any) => {
   const handleClick = () => {
-    if (props.wait) {
-      return;
-    }
+    if (props.wait) return;
     props.move(props.name);
   };
-  let color = 'blue-400';
-  if (props.name === 'reset') {
-    color = 'red-600';
-  }
+
+  let color = 'bg-blue-400';
 
   return (
-    <button className={`py-2 px-4 bg-${color} text-white m-1`} onClick={props.handleClick ? props.handleClick : handleClick}>
+    <button className={`py-2 px-4 ${color} rounded-lg border-4 border-gray-200 text-white m-1`} onClick={props.handleClick ? props.handleClick : handleClick}>
       {props.name}
     </button>
   );
@@ -24,7 +20,7 @@ const GameOverPrompt = (props: any) => {
     <div className='flex justify-center w-64 flex-wrap opacity-75 bg-gray-600 border-gray-600 rounded-lg  fixed'>
       <div className='text-center text-6xl text-white'>{props.name}</div>
       <div className='text-base'>
-        <Button name='reset' handleClick={props.handleClick} />
+        <Button name='New Game' handleClick={props.handleClick} />
         {props.name === 'You won!' && <Button name='continue' handleClick={props.continueGame} />}
       </div>
     </div>
@@ -32,13 +28,13 @@ const GameOverPrompt = (props: any) => {
 };
 
 const Box = ({ value }: { value: number }) => {
-  const style = { 2: 'bg-amber-300', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-orange-300', 32: 'bg-purple-300', 64: 'bg-red-300', 128: 'bg-teal-300', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300' }[value] || 'bg-gray-100';
-  return <div className={`flex justify-center items-center w-20 h-20 lg:w-24 lg:h-24 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
+  const style = { 2: 'bg-gray-300', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-300', 64: 'bg-red-300', 128: 'bg-teal-300', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300' }[value] || 'bg-gray-100';
+  return <div className={`flex rounded-lg justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
 };
 
 const Board = (props: any) => {
   return (
-    <div className='grid grid-cols-4 border-8 border-gray-700 bg-gray-200'>
+    <div className='grid grid-cols-4 rounded-lg border-4 border-gray-100 bg-gray-100'>
       {props.board.map((v: any, i: any) => {
         return <Box key={i} value={v} />;
       })}
@@ -149,7 +145,7 @@ const App = () => {
         {gameWonRef.current && <GameOverPrompt name={'You won!'} handleClick={resetGame} continueGame={continueGame} />}
         <div>{<Board board={board} />}</div>
         <div className='flex flex-wrap justify-center items-center'>
-          <Button name='reset' handleClick={resetGame} />
+          <Button name='New Game' handleClick={resetGame} />
         </div>
       </>
     </div>
