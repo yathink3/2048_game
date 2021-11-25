@@ -20,7 +20,7 @@ export const Box = ({ value }: { value: number | null }) => {
 };
 
 export const Board = ({ board }: { board: Array<number | null> }) => (
-  <div className='grid grid-cols-4 rounded-lg border-solid border border-gray-300 p-1'>
+  <div className='grid grid-cols-4 rounded-xl border-solid border border-gray-300 p-1'>
     {board.map((v, i) => (
       <Box key={i} value={v} />
     ))}
