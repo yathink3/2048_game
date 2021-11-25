@@ -54,11 +54,6 @@ const App = () => {
     setWait(false);
   };
 
-  const continueGame = () => {
-    setGameWon(false);
-    setWait(false);
-  };
-
   const handleKeyDown = (e: KeyboardEvent<HTMLImageElement>) => {
     if (wait) return;
     const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
@@ -66,17 +61,17 @@ const App = () => {
   };
 
   return (
-    <div tabIndex={0} ref={focusRef} onKeyDown={handleKeyDown} className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
-      <>
-        {gameOver && <GameOverPrompt name={'Game Over'} handleClick={resetGame} />}
-        {gameWon && <GameOverPrompt name={'You won!'} handleClick={resetGame} continueGame={continueGame} />}
-        <div>{<Board board={board} />}</div>
+    <>
+      {gameOver && <GameOverPrompt title='Game Over' description='Game ended , You Loss the Match .' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      {gameWon && <GameOverPrompt title='You won!' description='Game ended , You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      <div tabIndex={0} ref={focusRef} onKeyDown={handleKeyDown} className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
+        <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
         <div className='flex flex-wrap justify-center items-center'>
           <Button name='New Game' handleClick={resetGame} />
         </div>
-      </>
-    </div>
+      </div>
+    </>
   );
 };
 
