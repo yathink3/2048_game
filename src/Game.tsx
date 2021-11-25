@@ -40,6 +40,7 @@ const App = () => {
   }, [board, wait, gameOver]);
 
   useEffect(() => {
+    console.log(board);
     if (!gameWon && calculateGameWon(board)) {
       setWait(true);
       setGameWon(true);
@@ -62,8 +63,8 @@ const App = () => {
 
   return (
     <>
-      {gameOver && <GameOverPrompt title='Game Over' description='Game ended , You Loss the Match .' actions={<Button name='New Game' handleClick={resetGame} />} />}
-      {gameWon && <GameOverPrompt title='You won!' description='Game ended , You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      {gameOver && <GameOverPrompt title='Game Over' description='Game ended, You Loss the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      {gameWon && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       <div tabIndex={0} ref={focusRef} onKeyDown={handleKeyDown} className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
