@@ -28,7 +28,7 @@ const GameOverPrompt = (props: any) => {
 };
 
 const Box = ({ value }: { value: number }) => {
-  const style = { 2: 'bg-gray-300', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-300', 64: 'bg-red-300', 128: 'bg-teal-300', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300' }[value] || 'bg-gray-100';
+  const style = { 2: 'bg-gray-300', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-900', 64: 'bg-red-300', 128: 'bg-yellow-200', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300' }[value] || 'bg-gray-100';
   return <div className={`flex rounded-lg justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
 };
 
