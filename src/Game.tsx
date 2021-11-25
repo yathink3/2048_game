@@ -1,5 +1,5 @@
 import { KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { Board, Button, GameOverPrompt } from './components';
+import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
 import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomNum, renderBoard } from './utils';
 
 const App = () => {
@@ -71,6 +71,7 @@ const App = () => {
         {gameOver && <GameOverPrompt name={'Game Over'} handleClick={resetGame} />}
         {gameWon && <GameOverPrompt name={'You won!'} handleClick={resetGame} continueGame={continueGame} />}
         <div>{<Board board={board} />}</div>
+        <ArrowKeySet handleKey={key => setDirection(key)} />
         <div className='flex flex-wrap justify-center items-center'>
           <Button name='New Game' handleClick={resetGame} />
         </div>
