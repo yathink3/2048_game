@@ -31,25 +31,25 @@ export const ArrowKeySet = ({ handleKey }: { handleKey: (v: string) => any }) =>
   <div className='grid grid-cols-3 md:hidden'>
     <span></span>
     <button className='rounded-lg border-4 border-gray-100' onClick={e => handleKey('up')}>
-      <svg width='45' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+      <svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
         <path data-name='layer1' fill='none' stroke='#202020' stroke-miterlimit='10' stroke-width='2' d='M20 40l11.994-14L44 40'></path>
       </svg>
     </button>
     <span></span>
     <button className='rounded-lg border-4 border-gray-100' onClick={e => handleKey('left')}>
-      <svg width='45' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+      <svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
         <path data-name='layer1' fill='none' stroke='#202020' stroke-miterlimit='10' stroke-width='2' d='M39 20.006L25 32l14 12.006'></path>
       </svg>
     </button>
     <span></span>
     <button className='rounded-lg border-4 border-gray-100' onClick={e => handleKey('right')}>
-      <svg width='45' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+      <svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
         <path data-name='layer1' fill='none' stroke='#202020' stroke-miterlimit='10' stroke-width='2' d='M26 20.006L40 32 26 44.006'></path>
       </svg>
     </button>
     <span></span>
     <button className='rounded-lg border-4 border-gray-100' onClick={e => handleKey('down')}>
-      <svg width='45' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
+      <svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
         <path data-name='layer1' fill='none' stroke='#202020' stroke-miterlimit='10' stroke-width='2' d='M20 26l11.994 14L44 26'></path>
       </svg>
     </button>
