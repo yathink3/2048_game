@@ -10,7 +10,7 @@ export const generateInitialBoard = () => {
 
 export const generateRandomNum = () => (Math.random() >= 0.5 ? 2 : 4);
 
-export const calculateGameWon = (board: Array<number | null>) => board.some(v => (v || 0) > 10);
+export const calculateGameWon = (board: Array<number | null>) => board.some(v => v === 2048);
 
 export const calculateGameOver = (board: Array<number | null>) => {
   let gameOver = false;
