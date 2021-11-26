@@ -5,13 +5,11 @@ import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRand
 const App = () => {
   const [board, setBoard] = useState(() => generateInitialBoard());
   const [direction, setDirection] = useState('');
-  const [gameOver, setGameOver] = useState(false);
-  const [wait, setWait] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
+  const [status, setStatus] = useState('');
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (wait) return;
+      if (['wait', 'won', 'lost'].includes(status)) return;
       const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
       setDirection(key);
     };
@@ -22,45 +20,40 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (!wait && direction !== '' && !gameOver) {
+    if (status === '' && direction !== '') {
       const newBoard = renderBoard(board, direction);
       if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
         setBoard(newBoard);
-        setWait(true);
+        setStatus('wait');
       }
       setDirection('');
     }
-  }, [direction, board, wait, gameOver]);
+  }, [direction, board, status]);
 
   useEffect(() => {
-    if (wait && !gameOver && !gameWon) {
+    if (status === 'wait') {
       const newBoard = [...board];
       newBoard[getNewPos(board)] = generateRandomVal();
-      setWait(false);
+      setStatus('');
       setBoard(newBoard);
     }
-    if (!wait && !gameOver && !gameWon) setWait(false);
-  }, [board, wait, gameOver]);
+  }, [board, status]);
 
   useEffect(() => {
-    if (!gameWon && calculateGameWon(board)) {
-      setWait(true);
-      setGameWon(true);
-    }
-    if (calculateGameOver(board)) setGameOver(true);
-  }, [board, gameWon]);
+    if (status === '' && calculateGameWon(board)) setStatus('won');
+    else if (status === '' && calculateGameOver(board)) setStatus('lost');
+  }, [board, status]);
 
   const resetGame = () => {
     setBoard(() => generateInitialBoard());
-    setGameWon(false);
-    setGameOver(false);
-    setWait(false);
+    setStatus('');
+    setDirection('');
   };
 
   return (
     <>
-      {gameOver && <GameOverPrompt title='Game Over' description='Game ended, You Lost the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
-      {gameWon && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      {status === 'lost' && <GameOverPrompt title='Game Over' description='Game ended, You Lost the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
