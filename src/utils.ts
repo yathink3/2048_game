@@ -14,7 +14,7 @@ export const calculateGameWon = (board: Array<number | null>) => board.some(v =>
 
 export const calculateGameOver = (board: Array<number | null>) => {
   let gameOver = false;
-  const lastRound = board.every(v => v != null);
+  const lastRound = board.every(v => v !== null);
   const moves = ['left', 'right', 'up', 'down'];
   let newBoard = board;
   if (lastRound) {

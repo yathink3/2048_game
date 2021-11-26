@@ -1,4 +1,4 @@
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
 import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomNum, renderBoard } from './utils';
 
@@ -8,10 +8,17 @@ const App = () => {
   const [gameOver, setGameOver] = useState(false);
   const [wait, setWait] = useState(false);
   const [gameWon, setGameWon] = useState(false);
-  const focusRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    focusRef.current?.focus();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (wait) return;
+      const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
+      setDirection(key);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -55,17 +62,11 @@ const App = () => {
     setWait(false);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLImageElement>) => {
-    if (wait) return;
-    const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-    setDirection(key);
-  };
-
   return (
     <>
       {gameOver && <GameOverPrompt title='Game Over' description='Game ended, You Lost the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       {gameWon && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
-      <div tabIndex={0} ref={focusRef} onKeyDown={handleKeyDown} className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
+      <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
         <div className='flex flex-wrap justify-center items-center'>
