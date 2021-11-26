@@ -1,28 +1,26 @@
-export const generateInitialBoard = () => {
-  let num = Math.floor(Math.random() * 16);
-  let secondNum = num;
-  while (num === secondNum) secondNum = Math.floor(Math.random() * 16);
-  let newBoard = Array(16).fill(null);
-  newBoard[num] = 2;
-  newBoard[secondNum] = 2;
-  return newBoard;
+export const generateRandomPos = () => Math.floor(Math.random() * 16);
+
+export const generateRandomVal = () => (Math.random() >= 0.5 ? 2 : 4);
+
+export const getNewPos = (board: Array<number | null>) => {
+  let newPos = generateRandomPos();
+  while (board[newPos] !== null) newPos = generateRandomPos();
+  return newPos;
 };
 
-export const generateRandomNum = () => (Math.random() >= 0.5 ? 2 : 4);
+export const generateInitialBoard = () => {
+  let newBoard = Array(16).fill(null);
+  newBoard[generateRandomPos()] = 2;
+  newBoard[getNewPos(newBoard)] = generateRandomVal();
+  return newBoard;
+};
 
 export const calculateGameWon = (board: Array<number | null>) => board.some(v => v === 2048);
 
 export const calculateGameOver = (board: Array<number | null>) => {
-  let gameOver = false;
   const lastRound = board.every(v => v !== null);
   const moves = ['left', 'right', 'up', 'down'];
-  let newBoard = board;
-  if (lastRound) {
-    gameOver = moves.every(move => {
-      newBoard = renderBoard(board, move);
-      return JSON.stringify(board) === JSON.stringify(newBoard);
-    });
-  }
+  const gameOver = lastRound && moves.every(move => JSON.stringify(board) === JSON.stringify(renderBoard(board, move)));
   return gameOver;
 };
 

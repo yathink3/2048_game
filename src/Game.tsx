@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
-import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomNum, renderBoard } from './utils';
+import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomVal, getNewPos, renderBoard } from './utils';
 
 const App = () => {
   const [board, setBoard] = useState(() => generateInitialBoard());
@@ -34,12 +34,8 @@ const App = () => {
 
   useEffect(() => {
     if (wait && !gameOver && !gameWon) {
-      let idx = 0;
-      do idx = Math.floor(Math.random() * 16);
-      while (board[idx] != null);
-      let num = generateRandomNum();
       const newBoard = [...board];
-      newBoard[idx] = num;
+      newBoard[getNewPos(board)] = generateRandomVal();
       setWait(false);
       setBoard(newBoard);
     }
@@ -47,7 +43,6 @@ const App = () => {
   }, [board, wait, gameOver]);
 
   useEffect(() => {
-    console.log(board);
     if (!gameWon && calculateGameWon(board)) {
       setWait(true);
       setGameWon(true);
