@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
+import { useKeyBoard, useLocalStorage } from './hooks';
 import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomVal, getNewPos, renderBoard } from './utils';
 
 const App = () => {
@@ -7,19 +8,13 @@ const App = () => {
   const [direction, setDirection] = useState('');
   const [status, setStatus] = useState('');
   const [score, setScore] = useState(0);
-  const [best, setBest] = useState(JSON.parse(localStorage.getItem('best') || '0'));
+  const [best, setBest] = useLocalStorage('best', 0);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (['wait', 'won', 'lost'].includes(status)) return;
-      const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-      setDirection(key);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+  useKeyBoard(e => {
+    if (['wait', 'won', 'lost'].includes(status)) return;
+    const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
+    setDirection(key);
+  });
 
   useEffect(() => {
     if (status === '' && direction !== '') {
@@ -48,10 +43,7 @@ const App = () => {
   }, [board, status]);
 
   const resetGame = () => {
-    if (score > best) {
-      setBest(score);
-      localStorage.setItem('best', JSON.stringify(score));
-    }
+    if (score > best) setBest(score);
     setBoard(() => generateInitialBoard());
     setScore(0);
     setStatus('');
