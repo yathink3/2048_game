@@ -56,7 +56,8 @@ const App = () => {
       {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
         <div className='flex flex-row justify-evenly '>
-          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>SCORE : {score}</span> <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'> BEST : {best}</span>
+          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>SCORE : {score}</span>
+          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'> BEST : {best}</span>
         </div>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
