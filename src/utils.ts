@@ -30,16 +30,14 @@ export const renderBoard = (board: Array<number | null>, move: string) => {
   for (let i = 0; i < 4; i++) {
     let row = [];
     for (let j = 0; j < 4; j++) {
-      if (move === 'left' || move === 'right') row.push(board[i * 4 + j]);
-      if (move === 'up' || move === 'down') row.push(board[j * 4 + i]);
+      if (['left', 'right'].includes(move)) row.push(board[i * 4 + j]);
+      if (['up', 'down'].includes(move)) row.push(board[j * 4 + i]);
     }
-    if (row.length) {
-      scoreVal = scoreVal + addRow(row, move);
-      moveRow(row, move);
-      for (let j = 0; j < 4; j++) {
-        if (move === 'left' || move === 'right') newBoard[i * 4 + j] = row[j];
-        if (move === 'up' || move === 'down') newBoard[j * 4 + i] = row[j];
-      }
+    scoreVal = scoreVal + addRow(row, move);
+    moveRow(row, move);
+    for (let j = 0; j < 4; j++) {
+      if (['left', 'right'].includes(move)) newBoard[i * 4 + j] = row[j];
+      if (['up', 'down'].includes(move)) newBoard[j * 4 + i] = row[j];
     }
   }
   return { newBoard, scoreVal };
@@ -49,34 +47,31 @@ const addRow = (row: Array<number | null>, move: string) => {
   let score = 0;
   let current = 0;
   let currentIdx = 0;
-  if (move === 'right' || move === 'down') row.reverse();
-  row.forEach((ele, idx) => {
+  for (let i = 0; i < row.length; i++) {
+    let j = ['right', 'down'].includes(move) ? row.length - i - 1 : i;
+    const ele = row[j];
     if (current === ele) {
-      row[idx] = null;
+      row[j] = null;
       row[currentIdx] = current * 2;
       score = score + current * 2;
       current = 0;
       currentIdx = 0;
-      return;
-    }
-    if (ele !== null) {
+    } else if (ele !== null) {
       current = ele;
-      currentIdx = idx;
-      return;
+      currentIdx = j;
     }
-  });
-  if (move === 'right' || move === 'down') row.reverse();
+  }
   return score;
 };
 
 const moveRow = (row: Array<number | null>, move: string) => {
-  if (move === 'left' || move === 'up')
+  if (['left', 'up'].includes(move))
     row.sort((a, b) => {
       if ((b || 0) > (a || 0)) return 0;
       if (b == null) return -1;
       else return 0;
     });
-  if (move === 'right' || move === 'down')
+  if (['right', 'down'].includes(move))
     row.sort((a, b) => {
       if ((a || 0) > (b || 0)) return 0;
       if (a == null) return -1;
