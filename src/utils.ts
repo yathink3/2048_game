@@ -61,6 +61,5 @@ const addAndSortRow = (row: Array<number | null>, move: string) => {
   });
   row.sort((a, b) => (b === null ? -1 : 0));
   if (['right', 'down'].includes(move)) row.reverse();
-
   return score;
 };

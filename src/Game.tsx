@@ -6,7 +6,7 @@ import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRand
 const App = () => {
   const [direction, setDirection] = useState('');
   const [status, setStatus] = useLocalStorage('status', '');
-  const [board, setBoard] = useLocalStorage('board', () => generateInitialBoard());
+  const [board, setBoard] = useLocalStorage('board', generateInitialBoard);
   const [score, setScore] = useLocalStorage('score', 0);
   const [best, setBest] = useLocalStorage('best', 0);
 
@@ -33,7 +33,7 @@ const App = () => {
 
   const resetGame = () => {
     if (score > best) setBest(score);
-    setBoard(() => generateInitialBoard());
+    setBoard(generateInitialBoard);
     setScore(0);
     setStatus('');
     setDirection('');
