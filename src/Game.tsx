@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
-import { useKeyBoard, useLocalStorage } from './hooks';
+import { useDarkMode, useKeyBoard, useLocalStorage } from './hooks';
 import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomVal, getNewPos, renderBoard } from './utils';
 
 const App = () => {
@@ -9,6 +9,8 @@ const App = () => {
   const [board, setBoard] = useLocalStorage('board', generateInitialBoard);
   const [score, setScore] = useLocalStorage('score', 0);
   const [best, setBest] = useLocalStorage('best', 0);
+
+  useDarkMode();
 
   useKeyBoard(e => {
     if (status === '') {
@@ -43,10 +45,10 @@ const App = () => {
     <>
       {status === 'lost' && <GameOverPrompt title='Game Over' description='Game ended, You Lost the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
-      <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
+      <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
         <div className='flex flex-row justify-evenly '>
-          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>SCORE : {score}</span>
-          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>BEST : {best}</span>
+          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>SCORE : {score}</span>
+          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>BEST : {best}</span>
         </div>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />

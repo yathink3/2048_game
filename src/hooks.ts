@@ -9,6 +9,17 @@ export const useKeyBoard = (handleKeyDown: (v: KeyboardEvent) => any) => {
   }, []);
 };
 
+export const useDarkMode = () => {
+  const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
+  const darkMode = userMedia.matches;
+  useEffect(() => {
+    const className = 'dark';
+    const element = window.document.body;
+    if (darkMode) element.classList.add(className);
+    else element.classList.remove(className);
+  }, []);
+};
+
 export const useLocalStorage = (key: string, initialValue: any) => {
   const [storedValue, setStoredValue] = useState(() => {
     const item = window.localStorage.getItem(key);
