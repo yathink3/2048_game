@@ -11,36 +11,25 @@ const App = () => {
   const [best, setBest] = useLocalStorage('best', 0);
 
   useKeyBoard(e => {
-    if (['wait', 'won', 'lost'].includes(status)) return;
-    const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-    setDirection(key);
+    if (status === '') {
+      const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
+      setDirection(key);
+    }
   });
 
   useEffect(() => {
     if (status === '' && direction !== '') {
-      const { newBoard, scoreVal } = renderBoard(board, direction);
+      let { newBoard, scoreVal } = renderBoard(board, direction);
       if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
+        newBoard[getNewPos(newBoard)] = generateRandomVal();
+        if (calculateGameWon(newBoard)) setStatus('won');
+        else if (calculateGameOver(newBoard)) setStatus('lost');
         setBoard(newBoard);
         setScore(score + scoreVal);
-        setStatus('wait');
       }
       setDirection('');
     }
-  }, [direction, board, status]);
-
-  useEffect(() => {
-    if (status === 'wait') {
-      const newBoard = [...board];
-      newBoard[getNewPos(board)] = generateRandomVal();
-      setStatus('');
-      setBoard(newBoard);
-    }
-  }, [board, status]);
-
-  useEffect(() => {
-    if (status === '' && calculateGameWon(board)) setStatus('won');
-    else if (status === '' && calculateGameOver(board)) setStatus('lost');
-  }, [board, status]);
+  }, [direction, board]);
 
   const resetGame = () => {
     if (score > best) setBest(score);
@@ -57,7 +46,7 @@ const App = () => {
       <div className='flex flex-col h-screen justify-evenly items-center border-0 focus:outline-none noselect'>
         <div className='flex flex-row justify-evenly '>
           <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>SCORE : {score}</span>
-          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'> BEST : {best}</span>
+          <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1'>BEST : {best}</span>
         </div>
         <Board board={board} />
         <ArrowKeySet handleKey={key => setDirection(key)} />
