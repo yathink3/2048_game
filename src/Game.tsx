@@ -4,10 +4,10 @@ import { useKeyBoard, useLocalStorage } from './hooks';
 import { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomVal, getNewPos, renderBoard } from './utils';
 
 const App = () => {
-  const [board, setBoard] = useState(() => generateInitialBoard());
   const [direction, setDirection] = useState('');
-  const [status, setStatus] = useState('');
-  const [score, setScore] = useState(0);
+  const [status, setStatus] = useLocalStorage('status', '');
+  const [board, setBoard] = useLocalStorage('board', () => generateInitialBoard());
+  const [score, setScore] = useLocalStorage('score', 0);
   const [best, setBest] = useLocalStorage('best', 0);
 
   useKeyBoard(e => {

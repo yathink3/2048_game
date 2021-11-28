@@ -12,7 +12,7 @@ export const useKeyBoard = (handleKeyDown: (v: KeyboardEvent) => any) => {
 export const useLocalStorage = (key: string, initialValue: any) => {
   const [storedValue, setStoredValue] = useState(() => {
     const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
+    return item ? JSON.parse(item) : initialValue instanceof Function ? initialValue() : initialValue;
   });
 
   const setValue = (value: any) => {
