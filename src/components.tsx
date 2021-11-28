@@ -9,7 +9,7 @@ export const Button = ({ name, handleClick }: { name: string; handleClick?: () =
 export const GameOverPrompt = ({ title, description, actions }: { title?: ReactNode; description?: ReactNode; actions?: ReactNode }) => (
   <div className='fixed z-10 inset-0 overflow-y-auto'>
     <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
-      <div className='fixed inset-0 bg-gray-500 dark:bg-gray-800 bg-opacity-75 transition-opacity'></div>
+      <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
       <span className='inline-block align-middle h-screen'>&#8203;</span>
       <div className='inline-block  bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg w-full'>
         <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
