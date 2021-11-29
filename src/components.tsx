@@ -30,7 +30,7 @@ export const GameOverPrompt = ({ title, description, actions }: { title?: ReactN
   </div>
 );
 
-export const Box = ({ value }: { value: number | null }) => {
+export const Tile = ({ value }: { value: number | null }) => {
   const style = { 2: 'bg-gray-500', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-900', 64: 'bg-red-300', 128: 'bg-yellow-200', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300', 4096: 'bg-pink-700' }[value || 0] || 'bg-gray-100 dark:bg-gray-800';
   return <div className={`flex rounded-lg  justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
 };
@@ -40,7 +40,7 @@ export const Board = ({ board, cross_number }: { board: Array<number | null>; cr
   return (
     <div className={`grid ${style} rounded-xl border-solid border border-gray-300 p-1`}>
       {board.map((v, i) => (
-        <Box key={i} value={v} />
+        <Tile key={i} value={v} />
       ))}
     </div>
   );

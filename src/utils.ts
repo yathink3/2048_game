@@ -81,9 +81,9 @@ const useBoard = ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINN
     setStatus('');
   };
 
-  const runBoard = (direction: string) => {
-    if (status === '' && direction !== '') {
-      let { newBoard, scoreVal } = renderBoard(board, direction);
+  const runBoard = (move: string) => {
+    if (status === '' && move !== '') {
+      let { newBoard, scoreVal } = renderBoard(board, move);
       if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
         newBoard[getNewPos(newBoard)] = generateRandomVal();
         if (calculateGameWon(newBoard)) setStatus('won');

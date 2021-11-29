@@ -6,24 +6,24 @@ import useBoard from './utils';
 const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: number; winning_number?: number }) => {
   const { status, board, score, best, runBoard, initializeBoard } = useBoard({ CROSS_NUMBER: cross_number, WINNING_NUMBER: winning_number });
 
-  const [direction, setDirection] = useState('');
+  const [move, setMove] = useState('');
 
   useDarkMode();
 
   useKeyBoard(e => {
     if (status !== '') return;
     const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-    setDirection(key);
+    setMove(key);
   });
 
   useEffect(() => {
-    runBoard(direction);
-    setDirection('');
-  }, [direction, board]);
+    runBoard(move);
+    setMove('');
+  }, [move, board]);
 
   const resetGame = () => {
     initializeBoard();
-    setDirection('');
+    setMove('');
   };
 
   return (
@@ -36,7 +36,7 @@ const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: numb
           <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>BEST : {best}</span>
         </div>
         <Board board={board} cross_number={cross_number} />
-        <ArrowKeySet handleKey={key => setDirection(key)} />
+        <ArrowKeySet handleKey={key => setMove(key)} />
         <div className='flex flex-wrap justify-center items-center'>
           <Button name='New Game' handleClick={resetGame} />
         </div>
