@@ -1,19 +1,28 @@
-export default ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINNING_NUMBER: number }) => {
+import { useLocalStorage } from './hooks';
+
+const useBoard = ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINNING_NUMBER: number }) => {
   const generateRandomPos = () => Math.floor(Math.random() * CROSS_NUMBER * CROSS_NUMBER);
 
   const generateRandomVal = () => (Math.random() >= 0.5 ? 2 : 4);
-
-  const getNewPos = (board: Array<number | null>) => {
-    let newPos = generateRandomPos();
-    while (board[newPos] !== null) newPos = generateRandomPos();
-    return newPos;
-  };
 
   const generateInitialBoard = () => {
     let newBoard = Array(CROSS_NUMBER * CROSS_NUMBER).fill(null);
     newBoard[generateRandomPos()] = 2;
     newBoard[getNewPos(newBoard)] = generateRandomVal();
     return newBoard;
+  };
+
+  const [cNumner, setCNumber] = useLocalStorage('c_numner', CROSS_NUMBER);
+  const c_numb_changed = cNumner === CROSS_NUMBER ? false : true;
+  const [status, setStatus] = useLocalStorage('status', '', c_numb_changed);
+  const [board, setBoard] = useLocalStorage('board', generateInitialBoard, c_numb_changed);
+  const [score, setScore] = useLocalStorage('score', 0, c_numb_changed);
+  const [best, setBest] = useLocalStorage('best', 0, c_numb_changed);
+
+  const getNewPos = (board: Array<number | null>) => {
+    let newPos = generateRandomPos();
+    while (board[newPos] !== null) newPos = generateRandomPos();
+    return newPos;
   };
 
   const calculateGameWon = (board: Array<number | null>) => board.some(v => v === WINNING_NUMBER);
@@ -65,5 +74,28 @@ export default ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINNIN
     return score;
   };
 
-  return { generateRandomPos, generateRandomVal, getNewPos, generateInitialBoard, calculateGameWon, calculateGameOver, renderBoard };
+  const initializeBoard = () => {
+    if (score > best) setBest(score);
+    setBoard(generateInitialBoard);
+    setScore(0);
+    setStatus('');
+  };
+
+  const runBoard = (direction: string) => {
+    if (status === '' && direction !== '') {
+      let { newBoard, scoreVal } = renderBoard(board, direction);
+      if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
+        newBoard[getNewPos(newBoard)] = generateRandomVal();
+        if (calculateGameWon(newBoard)) setStatus('won');
+        else if (calculateGameOver(newBoard)) setStatus('lost');
+        setBoard(newBoard);
+        setCNumber(CROSS_NUMBER);
+        setScore(score + scoreVal);
+      }
+    }
+  };
+
+  return { status, board, score, best, runBoard, initializeBoard };
 };
+
+export default useBoard;

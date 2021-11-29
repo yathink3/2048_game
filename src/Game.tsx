@@ -1,47 +1,28 @@
 import { useEffect, useState } from 'react';
 import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
-import { useDarkMode, useKeyBoard, useLocalStorage } from './hooks';
-import useUtils from './utils';
+import { useDarkMode, useKeyBoard } from './hooks';
+import useBoard from './utils';
 
 const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: number; winning_number?: number }) => {
-  const { calculateGameOver, calculateGameWon, generateInitialBoard, generateRandomVal, getNewPos, renderBoard } = useUtils({ CROSS_NUMBER: cross_number, WINNING_NUMBER: winning_number });
-  const [cNumner, setCNumber] = useLocalStorage('c_numner', cross_number);
-  const c_numb_changed = cNumner === cross_number ? false : true;
+  const { status, board, score, best, runBoard, initializeBoard } = useBoard({ CROSS_NUMBER: cross_number, WINNING_NUMBER: winning_number });
+
   const [direction, setDirection] = useState('');
-  const [status, setStatus] = useLocalStorage('status', '', c_numb_changed);
-  const [board, setBoard] = useLocalStorage('board', generateInitialBoard, c_numb_changed);
-  const [score, setScore] = useLocalStorage('score', 0, c_numb_changed);
-  const [best, setBest] = useLocalStorage('best', 0, c_numb_changed);
 
   useDarkMode();
 
   useKeyBoard(e => {
-    if (status === '') {
-      const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-      setDirection(key);
-    }
+    if (status !== '') return;
+    const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
+    setDirection(key);
   });
 
   useEffect(() => {
-    if (status === '' && direction !== '') {
-      let { newBoard, scoreVal } = renderBoard(board, direction);
-      if (JSON.stringify(board) !== JSON.stringify(newBoard)) {
-        newBoard[getNewPos(newBoard)] = generateRandomVal();
-        if (calculateGameWon(newBoard)) setStatus('won');
-        else if (calculateGameOver(newBoard)) setStatus('lost');
-        setBoard(newBoard);
-        setCNumber(cross_number);
-        setScore(score + scoreVal);
-      }
-      setDirection('');
-    }
+    runBoard(direction);
+    setDirection('');
   }, [direction, board]);
 
   const resetGame = () => {
-    if (score > best) setBest(score);
-    setBoard(generateInitialBoard);
-    setScore(0);
-    setStatus('');
+    initializeBoard();
     setDirection('');
   };
 
