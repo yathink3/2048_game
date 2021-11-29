@@ -20,10 +20,10 @@ export const useDarkMode = () => {
   }, []);
 };
 
-export const useLocalStorage = (key: string, initialValue: any) => {
+export const useLocalStorage = (key: string, initialValue: any, refresh: boolean = false) => {
   const [storedValue, setStoredValue] = useState(() => {
     const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue instanceof Function ? initialValue() : initialValue;
+    return item && !refresh ? JSON.parse(item) : initialValue instanceof Function ? initialValue() : initialValue;
   });
 
   const setValue = (value: any) => {

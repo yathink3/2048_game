@@ -31,17 +31,20 @@ export const GameOverPrompt = ({ title, description, actions }: { title?: ReactN
 );
 
 export const Box = ({ value }: { value: number | null }) => {
-  const style = { 2: 'bg-gray-500', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-900', 64: 'bg-red-300', 128: 'bg-yellow-200', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300' }[value || 0] || 'bg-gray-100 dark:bg-gray-800';
+  const style = { 2: 'bg-gray-500', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-900', 64: 'bg-red-300', 128: 'bg-yellow-200', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300', 4096: 'bg-pink-700' }[value || 0] || 'bg-gray-100 dark:bg-gray-800';
   return <div className={`flex rounded-lg  justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
 };
 
-export const Board = ({ board }: { board: Array<number | null> }) => (
-  <div className='grid grid-cols-4 rounded-xl border-solid border border-gray-300 p-1'>
-    {board.map((v, i) => (
-      <Box key={i} value={v} />
-    ))}
-  </div>
-);
+export const Board = ({ board, cross_number }: { board: Array<number | null>; cross_number: number }) => {
+  const style = { 4: 'grid-cols-4', 5: 'grid-cols-5', 6: 'grid-cols-6', 7: 'grid-cols-7', 8: 'grid-cols-8', 9: 'grid-cols-9', 10: 'grid-cols-10' }[cross_number] || 'grid-cols-4';
+  return (
+    <div className={`grid ${style} rounded-xl border-solid border border-gray-300 p-1`}>
+      {board.map((v, i) => (
+        <Box key={i} value={v} />
+      ))}
+    </div>
+  );
+};
 
 export const ArrowKeySet = ({ handleKey }: { handleKey: (v: string) => any }) => (
   <div className='grid grid-cols-3 md:hidden'>
