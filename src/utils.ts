@@ -5,6 +5,12 @@ const useBoard = ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINN
 
   const generateRandomVal = () => (Math.random() >= 0.5 ? 2 : 4);
 
+  const getNewPos = (board: Array<number | null>) => {
+    let newPos = generateRandomPos();
+    while (board[newPos] !== null) newPos = generateRandomPos();
+    return newPos;
+  };
+
   const generateInitialBoard = () => {
     let newBoard = Array(CROSS_NUMBER * CROSS_NUMBER).fill(null);
     newBoard[generateRandomPos()] = 2;
@@ -18,12 +24,6 @@ const useBoard = ({ CROSS_NUMBER, WINNING_NUMBER }: { CROSS_NUMBER: number; WINN
   const [board, setBoard] = useLocalStorage('board', generateInitialBoard, c_numb_changed);
   const [score, setScore] = useLocalStorage('score', 0, c_numb_changed);
   const [best, setBest] = useLocalStorage('best', 0, c_numb_changed);
-
-  const getNewPos = (board: Array<number | null>) => {
-    let newPos = generateRandomPos();
-    while (board[newPos] !== null) newPos = generateRandomPos();
-    return newPos;
-  };
 
   const calculateGameWon = (board: Array<number | null>) => board.some(v => v === WINNING_NUMBER);
 
