@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowKeySet, Board, Button, GameOverPrompt } from './components';
+import { ArrowButton, Board, Button, GameOverPrompt } from './components';
 import { useDarkMode, useKeyBoard } from './hooks';
 import useBoard from './utils';
 
@@ -36,7 +36,17 @@ const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: numb
           <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>BEST : {best}</span>
         </div>
         <Board board={board} cross_number={cross_number} />
-        <ArrowKeySet handleKey={key => setMove(key)} />
+        <div className='grid grid-cols-3 md:hidden'>
+          <span />
+          <ArrowButton arrowType='up' handleKey={key => setMove(key)} />
+          <span />
+          <ArrowButton arrowType='left' handleKey={key => setMove(key)} />
+          <span />
+          <ArrowButton arrowType='right' handleKey={key => setMove(key)} />
+          <span />
+          <ArrowButton arrowType='down' handleKey={key => setMove(key)} />
+          <span />
+        </div>
         <div className='flex flex-wrap justify-center items-center'>
           <Button name='New Game' handleClick={resetGame} />
         </div>
