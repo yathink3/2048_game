@@ -46,6 +46,7 @@ export const Board = ({ board, cross_number }: { board: Array<number | null>; cr
   );
 };
 
+
 export const ArrowButton = ({ arrowType, handleKey }: { arrowType: 'up' | 'down' | 'left' | 'right'; handleKey: (v: string) => any }) => {
   const d = { up: `M20 40l11.994-14L44 40`, down: `M20 26l11.994 14L44 26`, left: `M39 20.006L25 32l14 12.006`, right: `M26 20.006L40 32 26 44.006` }[arrowType];
   const innerHtml = { __html: `<svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path class='fill-current' d='${d}'></path></svg>` };
