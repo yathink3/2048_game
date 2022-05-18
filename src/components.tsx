@@ -6,6 +6,7 @@ export const Button = ({ name, handleClick }: { name: string; handleClick?: () =
   </button>
 );
 
+
 export const GameOverPrompt = ({ title, description, actions }: { title?: ReactNode; description?: ReactNode; actions?: ReactNode }) => (
   <div className='fixed z-10 inset-0 overflow-y-auto'>
     <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
