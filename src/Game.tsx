@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { ArrowButton, Board, Button, GameOverPrompt } from './components';
-import { useDarkMode, useKeyBoard } from './hooks';
+import { useDarkMode, useKeyBoardArrows } from './hooks';
 import useBoard from './utils';
 
-const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: number; winning_number?: number }) => {
-  const { status, board, score, best, runBoard, initializeBoard } = useBoard({ CROSS_NUMBER: cross_number, WINNING_NUMBER: winning_number });
+const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: number; WINNING_NUMBER?: number }) => {
+  const { status, board, score, best, runBoard, initializeBoard } = useBoard({ CROSS_NUMBER, WINNING_NUMBER });
 
   const [move, setMove] = useState('');
 
   useDarkMode();
 
-  useKeyBoard(e => {
-    if (status !== '') return;
-    const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
-    setMove(key);
+  useKeyBoardArrows(key => {
+    if (status === '') setMove(key);
   });
 
   useEffect(() => {
@@ -35,16 +33,16 @@ const Game = ({ cross_number = 4, winning_number = 2048 }: { cross_number?: numb
           <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>SCORE : {score}</span>
           <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>BEST : {best}</span>
         </div>
-        <Board board={board} cross_number={cross_number} />
+        <Board board={board} cross_number={CROSS_NUMBER} />
         <div className='grid grid-cols-3 md:hidden'>
           <span />
-          <ArrowButton arrowType='up' handleKey={key => setMove(key)} />
+          <ArrowButton arrowType='up' handleKey={setMove} />
           <span />
-          <ArrowButton arrowType='left' handleKey={key => setMove(key)} />
+          <ArrowButton arrowType='left' handleKey={setMove} />
           <span />
-          <ArrowButton arrowType='right' handleKey={key => setMove(key)} />
+          <ArrowButton arrowType='right' handleKey={setMove} />
           <span />
-          <ArrowButton arrowType='down' handleKey={key => setMove(key)} />
+          <ArrowButton arrowType='down' handleKey={setMove} />
           <span />
         </div>
         <div className='flex flex-wrap justify-center items-center'>

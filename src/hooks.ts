@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export const useKeyBoard = (handleKeyDown: (v: KeyboardEvent) => any) => {
+export const useKeyBoardArrows = (handleKeyArrow: (v: string) => any) => {
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const key = { ArrowDown: 'down', ArrowUp: 'up', ArrowLeft: 'left', ArrowRight: 'right' }[e.key] || '';
+      if (key) handleKeyArrow(key);
+    };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);

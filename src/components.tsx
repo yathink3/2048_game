@@ -6,7 +6,6 @@ export const Button = ({ name, handleClick }: { name: string; handleClick?: () =
   </button>
 );
 
-
 export const GameOverPrompt = ({ title, description, actions }: { title?: ReactNode; description?: ReactNode; actions?: ReactNode }) => (
   <div className='fixed z-10 inset-0 overflow-y-auto'>
     <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
@@ -46,7 +45,6 @@ export const Board = ({ board, cross_number }: { board: Array<number | null>; cr
     </div>
   );
 };
-
 
 export const ArrowButton = ({ arrowType, handleKey }: { arrowType: 'up' | 'down' | 'left' | 'right'; handleKey: (v: string) => any }) => {
   const d = { up: `M20 40l11.994-14L44 40`, down: `M20 26l11.994 14L44 26`, left: `M39 20.006L25 32l14 12.006`, right: `M26 20.006L40 32 26 44.006` }[arrowType];
