@@ -15,7 +15,7 @@ export const Button = ({ name, handleClick }: { name: string; handleClick?: () =
 
 export const GameOverPrompt = ({ title, description, actions }: { title?: ReactNode; description?: ReactNode; actions?: ReactNode }) => (
   <ModelComp>
-    <div className='fixed z-10 inset-0 overflow-y-auto'>
+    <div className='fixed z-10 inset-0'>
       <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
         <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
         <span className='inline-block align-middle h-screen'>&#8203;</span>
