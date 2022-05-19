@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 const ModelComp = ({ id, children }: { id?: string; children?: ReactNode }) => {
   const portalElm = document.getElementById(id || 'model');
-  if (portalElm) ReactDOM.createPortal(children, portalElm);
-  return null;
+  if (!portalElm) return null;
+  return ReactDOM.createPortal(children, portalElm);
 };
 
 export const Button = ({ name, handleClick }: { name: string; handleClick?: () => any }) => (
