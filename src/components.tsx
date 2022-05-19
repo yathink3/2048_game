@@ -1,4 +1,11 @@
 import { ReactNode } from 'react';
+import ReactDOM from 'react-dom';
+
+const ModelComp = ({ id, children }: { id?: string; children?: ReactNode }) => {
+  const portalElm = document.getElementById(id || 'model');
+  if (portalElm) ReactDOM.createPortal(children, portalElm);
+  return null;
+};
 
 export const Button = ({ name, handleClick }: { name: string; handleClick?: () => any }) => (
   <button className='py-2 px-4 bg-blue-400 rounded-lg border-4 border-gray-200 text-white m-1' onClick={handleClick}>
@@ -7,27 +14,29 @@ export const Button = ({ name, handleClick }: { name: string; handleClick?: () =
 );
 
 export const GameOverPrompt = ({ title, description, actions }: { title?: ReactNode; description?: ReactNode; actions?: ReactNode }) => (
-  <div className='fixed z-10 inset-0 overflow-y-auto'>
-    <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
-      <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
-      <span className='inline-block align-middle h-screen'>&#8203;</span>
-      <div className='inline-block  bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg w-full'>
-        <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
-          <div className='sm:flex sm:items-start'>
-            <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
-              <h3 className='text-2xl leading-6 font-medium text-gray-900' id='modal-title'>
-                {title}
-              </h3>
-              <div className='mt-2'>
-                <p className='text-sm text-gray-500'>{description}</p>
+  <ModelComp>
+    <div className='fixed z-10 inset-0 overflow-y-auto'>
+      <div className='items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center block p-0'>
+        <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
+        <span className='inline-block align-middle h-screen'>&#8203;</span>
+        <div className='inline-block  bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all my-8 align-middle max-w-lg w-full'>
+          <div className='bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4'>
+            <div className='sm:flex sm:items-start'>
+              <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
+                <h3 className='text-2xl leading-6 font-medium text-gray-900' id='modal-title'>
+                  {title}
+                </h3>
+                <div className='mt-2'>
+                  <p className='text-sm text-gray-500'>{description}</p>
+                </div>
               </div>
             </div>
           </div>
+          <div className='bg-gray-50  py-3 px-6 flex justify-center md:justify-end'>{actions}</div>
         </div>
-        <div className='bg-gray-50  py-3 px-6 flex justify-center md:justify-end'>{actions}</div>
       </div>
     </div>
-  </div>
+  </ModelComp>
 );
 
 export const Tile = ({ value }: { value: number | null }) => {
