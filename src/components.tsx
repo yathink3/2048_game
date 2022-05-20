@@ -46,18 +46,12 @@ export const Tile = ({ value }: { value: number | null }) => {
 
 export const Board = ({ board, cross_number }: { board: Array<number | null>; cross_number: number }) => {
   const style = { 4: 'grid-cols-4', 5: 'grid-cols-5', 6: 'grid-cols-6', 7: 'grid-cols-7', 8: 'grid-cols-8', 9: 'grid-cols-9', 10: 'grid-cols-10' }[cross_number] || 'grid-cols-4';
-  return (
-    <div className={`grid ${style} rounded-xl border-solid border border-gray-300 p-1`}>
-      {board.map((v, i) => (
-        <Tile key={i} value={v} />
-      ))}
-    </div>
-  );
+  return <div className={`grid ${style} rounded-xl border-solid border border-gray-300 p-1`}>{board.map((v, i) => v !== undefined && <Tile key={i} value={v} />)}</div>;
 };
 
 export const ArrowButton = ({ arrowType, handleKey }: { arrowType: 'up' | 'down' | 'left' | 'right'; handleKey: (v: string) => any }) => {
   const d = { up: `M20 40l11.994-14L44 40`, down: `M20 26l11.994 14L44 26`, left: `M39 20.006L25 32l14 12.006`, right: `M26 20.006L40 32 26 44.006` }[arrowType];
-  const innerHtml = { __html: `<svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path class='fill-current' d='${d}'></path></svg>` };
+  const innerHtml = `<svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path class='fill-current' d='${d}'></path></svg>`;
   const className = 'transform active:scale-110 motion-reduce:transform-none rounded-lg border-4 border-gray-100 dark:text-white';
-  return <button className={className} dangerouslySetInnerHTML={innerHtml} onClick={e => handleKey(arrowType)} />;
+  return <button className={className} dangerouslySetInnerHTML={{ __html: innerHtml }} onClick={e => handleKey(arrowType)} />;
 };
