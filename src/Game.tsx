@@ -7,8 +7,8 @@ const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: numb
   const [move, setMove] = useState('');
   useDarkMode();
   useKeyBoardArrows(status === '' && setMove);
-  useEffect(() => (runBoard(move), setMove('')), [move, board]);
-  const resetGame = () => (initializeBoard(), setMove(''));
+  useEffect(() => void (runBoard(move), setMove('')), [move, board]);
+  const resetGame = () => void (initializeBoard(), setMove(''));
 
   return (
     <div className='flex flex-col min-h-screen justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
