@@ -1,28 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ArrowButton, Board, Button, GameOverPrompt } from './components';
-import { useDarkMode, useKeyBoardArrows } from './hooks';
-import useBoard from './utils';
+import { useDarkMode, useKeyBoardArrows, useBoard } from './hooks';
 
 const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: number; WINNING_NUMBER?: number }) => {
   const { status, board, score, best, runBoard, initializeBoard } = useBoard({ CROSS_NUMBER, WINNING_NUMBER });
-
   const [move, setMove] = useState('');
-
   useDarkMode();
-
-  useKeyBoardArrows(key => {
-    if (status === '') setMove(key);
-  });
-
-  useEffect(() => {
-    runBoard(move);
-    setMove('');
-  }, [move, board]);
-
-  const resetGame = () => {
-    initializeBoard();
-    setMove('');
-  };
+  useKeyBoardArrows(status === '' && setMove);
+  useEffect(() => (runBoard(move), setMove('')), [move, board]);
+  const resetGame = () => (initializeBoard(), setMove(''));
 
   return (
     <div className='flex flex-col min-h-screen justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
