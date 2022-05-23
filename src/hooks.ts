@@ -14,11 +14,9 @@ export const useKeyBoardArrows = (handleKeyArrow: any) => {
 };
 
 export const useDarkMode = () => {
-  const userMedia = window.matchMedia('(prefers-color-scheme: dark)');
-  const darkMode = userMedia.matches;
   useEffect(() => {
-    const element = window.document.body;
-    element.classList.toggle('dark', darkMode);
+    const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    window.document.body.classList.toggle('dark', darkMode);
   }, []);
 };
 
