@@ -14,6 +14,10 @@ const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: numb
     <div className='flex flex-col min-h-screen justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
       {status === 'lost' && <GameOverPrompt title='Game Over' description={`Game ended, You Lost the Match. Your Score : ${score}`} actions={<Button name='New Game' handleClick={resetGame} />} />}
       {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
+      <div className='dark:text-white'>
+        <div className='hidden md:block'>Use arrow keys to merge tiles and reach the 2048 tile.</div>
+        <div className='md:hidden'>Use ↓ ← ↑ → arrows to merge tiles and reach 2048.</div>
+      </div>
       <div className='flex flex-row justify-evenly '>
         <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>SCORE : {score}</span>
         <span className='py-2 px-4 rounded-lg border-4 border-gray-200 items-center m-1 dark:text-white'>BEST : {best}</span>
