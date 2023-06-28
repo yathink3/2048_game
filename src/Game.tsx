@@ -13,7 +13,7 @@ const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: numb
 
   return (
     <div className='fixed md:relative flex flex-col min-h-screen min-w-full justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
-      {prompt && <GameOverPrompt title='Guide' description={`Welcome to the 2048 game! In this exciting game, Your goal is to move cards using arrow keys. When two cards with the same number collide, they merge into a double. Keep merging and planning your moves to reach the final card with the number 2048. Good luck and enjoy the game!`} actions={<Button name='Continue Game' handleClick={() => setPrompt(false)} />} />}
+      {prompt && <GameOverPrompt title='Guide' description={`Welcome to the 2048 game! In this exciting game, Your goal is to move tiles using arrow keys. When two tiles with the same number collide, they merge into a double. Keep merging and planning your moves to reach the final tile with the number 2048. Good luck and enjoy the game!`} actions={<Button name='Continue Game' handleClick={() => setPrompt(false)} />} />}
       {status === 'lost' && <GameOverPrompt title='Game Over' description={`Game ended, You Lost the Match. Your Score : ${score}`} actions={<Button name='New Game' handleClick={resetGame} />} />}
       {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       <div className='flex flex-row justify-evenly hidden md:block'>
