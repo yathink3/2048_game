@@ -11,7 +11,7 @@ const Game = ({ CROSS_NUMBER = 4, WINNING_NUMBER = 2048 }: { CROSS_NUMBER?: numb
   const resetGame = () => void (initializeBoard(), setMove(''));
 
   return (
-    <div className='fixed md:relative flex flex-col min-h-screen min-w-full justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
+    <div className='fixed md:relative flex flex-col min-w-full justify-evenly items-center border-0 focus:outline-none noselect dark:bg-gray-800'>
       {status === 'lost' && <GameOverPrompt title='Game Over' description={`Game ended, You Lost the Match. Your Score : ${score}`} actions={<Button name='New Game' handleClick={resetGame} />} />}
       {status === 'won' && <GameOverPrompt title='You won!' description='Game ended, You won the Match.' actions={<Button name='New Game' handleClick={resetGame} />} />}
       <div className='flex flex-row justify-evenly hidden md:block'>
