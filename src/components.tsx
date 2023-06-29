@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
-
-const audio = new Audio('./Iphone Touch Sound.mp3');
+import iphoneSound from './Iphone Touch Sound.mp3';
+const audio = new Audio(iphoneSound);
 
 const ModelComp = ({ id, children }: { id?: string; children?: ReactNode }) => {
   const portalElm = document.getElementById(id || 'model');
