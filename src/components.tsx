@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
-import iphoneSound from './Iphone Touch Sound.mp3';
+import iphoneSound from './iphone-tap.mp3';
 const audio = new Audio(iphoneSound);
 
 const ModelComp = ({ id, children }: { id?: string; children?: ReactNode }) => {
