@@ -41,7 +41,7 @@ export const GameOverPrompt = ({ title, description, actions }: { title?: ReactN
 
 export const Tile = ({ value }: { value: number | null }) => {
   const style = { 2: 'bg-gray-500', 4: 'bg-blue-300', 8: 'bg-green-300', 16: 'bg-blue-500', 32: 'bg-purple-900', 64: 'bg-red-300', 128: 'bg-yellow-200', 256: 'bg-yellow-300', 512: 'bg-indigo-300', 1024: 'bg-pink-300', 2048: 'bg-gray-300', 4096: 'bg-pink-700' }[value || 0] || 'bg-gray-100 dark:bg-gray-800';
-  return <div className={`prevent-select flex rounded-lg  justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
+  return <div className={`select-none flex rounded-lg  justify-center items-center w-20 h-20 lg:w-24 lg:h-24 m-0.5 ${style} text-white sm:text-2xl lg:text-6xl font-semibold border-solid border border-gray-300`}>{value}</div>;
 };
 
 export const Board = ({ board, cross_number }: { board: Array<number | null>; cross_number: number }) => {
@@ -52,6 +52,6 @@ export const Board = ({ board, cross_number }: { board: Array<number | null>; cr
 export const ArrowButton = ({ arrowType, handleKey }: { arrowType: 'up' | 'down' | 'left' | 'right'; handleKey: (v: string) => any }) => {
   const d = { up: `M20 40l11.994-14L44 40`, down: `M20 26l11.994 14L44 26`, left: `M39 20.006L25 32l14 12.006`, right: `M26 20.006L40 32 26 44.006` }[arrowType];
   const innerHtml = `<svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path class='fill-current' d='${d}'></path></svg>`;
-  const className = 'prevent-select transform active:scale-110 motion-reduce:transform-none rounded-lg border-4 border-gray-100 dark:text-white';
+  const className = 'select-none transform active:scale-110 motion-reduce:transform-none rounded-lg border-4 border-gray-100 dark:text-white';
   return <button className={className} dangerouslySetInnerHTML={{ __html: innerHtml }} onClick={e => handleKey(arrowType)} />;
 };
