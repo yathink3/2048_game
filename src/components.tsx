@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
+const audio = new Audio('./iphone-tap.mp3');
+
 const ModelComp = ({ id, children }: { id?: string; children?: ReactNode }) => {
   const portalElm = document.getElementById(id || 'model');
   if (!portalElm) return null;
@@ -53,5 +55,5 @@ export const ArrowButton = ({ arrowType, handleKey }: { arrowType: 'up' | 'down'
   const d = { up: `M20 40l11.994-14L44 40`, down: `M20 26l11.994 14L44 26`, left: `M39 20.006L25 32l14 12.006`, right: `M26 20.006L40 32 26 44.006` }[arrowType];
   const innerHtml = `<svg width='55' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path class='fill-current' d='${d}'></path></svg>`;
   const className = 'select-none transform active:scale-110 motion-reduce:transform-none rounded-lg border-4 border-gray-100 dark:text-white';
-  return <button className={className} dangerouslySetInnerHTML={{ __html: innerHtml }} onClick={e => handleKey(arrowType)} />;
+  return <button className={className} dangerouslySetInnerHTML={{ __html: innerHtml }} onClick={e => { audio.play(); handleKey(arrowType); }} />;
 };
